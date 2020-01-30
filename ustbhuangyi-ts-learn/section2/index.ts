@@ -1,16 +1,16 @@
-class Person {
+// class Person {
 
-    name: string;
+//     public name: string;
 
-    constructor() {
-        this.name = 'aaa';
-    }
+//     constructor() {
+//         this.name = 'aaa';
+//     }
 
-    getName(){
-        return this.name;
-    }
-}
+//     getName(){
+//         return this.name;
+//     }
+// }
 
 
-const p = new Person();
-console.log(p.getName());
+// const p = new Person();
+// console.log(p.getName());
