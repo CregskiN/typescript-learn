@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:build": "tsc -w",
-    "dev:start": "nodemon node ./build/crowller.js",
-    "dev": "concurrently npm:dev:*"
+    "dev:start": "nodemon node ./build/index.js",
+    "dev": "tsc && concurrently npm:dev:*"
   },
   "nodemonConfig": {
     "ignore": [
@@ -19,14 +19,19 @@
   "license": "ISC",
   "devDependencies": {
     "@types/cheerio": "^0.22.16",
+    "@types/cookie-session": "^2.0.38",
+    "@types/express": "^4.17.2",
+    "@types/superagent": "^4.1.4",
+    "body-parser": "^1.19.0",
+    "cheerio": "^1.0.0-rc.3",
     "concurrently": "^5.1.0",
+    "cookie-session": "^1.4.0",
     "nodemon": "^2.0.2",
+    "superagent": "^5.2.1",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
   },
   "dependencies": {
-    "@types/superagent": "^4.1.4",
-    "cheerio": "^1.0.0-rc.3",
-    "superagent": "^5.2.1"
+    "express": "^4.17.1"
   }
 }

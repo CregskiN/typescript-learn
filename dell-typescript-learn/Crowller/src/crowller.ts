@@ -43,14 +43,11 @@ class Crowller {
 }
 
 
-const secret = 'secretKey';
-const url = `http://www.dell-lee.com/typescript/demo.html?secret=${secret}`;
-
-const analyze = DellAnalyzer.getInstance();
-const crowller = new Crowller(url, analyze);
 
 
 
 export {
-    Analyzer
+    Analyzer,
+    Crowller,
+    DellAnalyzer
 }

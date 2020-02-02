@@ -44,6 +44,7 @@ var fs_1 = __importDefault(require("fs"));
 var path_1 = __importDefault(require("path"));
 var superagent_1 = __importDefault(require("superagent"));
 var dellAnalyzer_1 = require("./dellAnalyzer");
+exports.DellAnalyzer = dellAnalyzer_1.DellAnalyzer;
 var Crowller = /** @class */ (function () {
     function Crowller(url, analyzer) {
         this.filePath = path_1.default.resolve(__dirname, "../data/course.json"); // 绝对路径 + 手写路径 拼接
@@ -87,7 +88,4 @@ var Crowller = /** @class */ (function () {
     };
     return Crowller;
 }());
-var secret = 'secretKey';
-var url = "http://www.dell-lee.com/typescript/demo.html?secret=" + secret;
-var analyze = dellAnalyzer_1.DellAnalyzer.getInstance();
-var crowller = new Crowller(url, analyze);
+exports.Crowller = Crowller;
