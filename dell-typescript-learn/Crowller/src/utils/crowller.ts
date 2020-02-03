@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import superagent from "superagent";
 
-import { DellAnalyzer } from "./dellAnalyzer";
+import { DellAnalyzer } from "../analyzer";
 
 
 interface Analyzer {
@@ -12,7 +12,7 @@ interface Analyzer {
 
 
 class Crowller {
-    private filePath = path.resolve(__dirname, "../data/course.json"); // 绝对路径 + 手写路径 拼接
+    private filePath = path.resolve(__dirname, "../../data/course.json"); // 绝对路径 + 手写路径 拼接
     private url: string;
     private analyzer: any;
 

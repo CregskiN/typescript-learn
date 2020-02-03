@@ -1,11 +1,25 @@
 import { Router, Request, Response, NextFunction } from 'express';
+import fs from 'fs';
+import path from 'path';
 
-import { Crowller, DellAnalyzer } from './crowller';
+import { Crowller, DellAnalyzer } from './utils/crowller';
+import { getResponseData } from './utils/util';
 
 const router = Router();
 
+// 中间件：登陆验证
+const checkLogin = (req: Request, res: Response, next: NextFunction) => {
+    const isLogin = req.session ? req.session.login : false;
+    if (!isLogin) {
+        res.json(getResponseData('operation failed', '请先登录'))
+        return;
+    }
+    next();
+}
+
+
 // 解决问题1：继承原接口
-interface RequesWithBody extends Request {
+interface BodyRequest extends Request {
     body: {
         [key: string]: string | undefined;
     }
@@ -18,7 +32,8 @@ router.get('/', (req: Request, res: Response, next: NextFunction) => {
         res.send(`
         <html>
             <body>
-                <a href="/getData">爬取内容</a>
+                <a href="/crowller">爬取</a>
+                <a href="/showData">展示</a>
                 <a href="/logout">退出</a>
             </body>
         </html>
@@ -42,46 +57,44 @@ router.get('/logout', (req: Request, res: Response, next: NextFunction) => {
     if (req.session) {
         req.session.login = undefined;
     }
-    res.redirect('/');
+    res.json(getResponseData('登出成功！'));
 })
 
 // 登录路由
-router.post('/login', (req: RequesWithBody, res: Response, next: NextFunction) => {
+router.post('/login', (req: BodyRequest, res: Response, next: NextFunction) => {
     // 逻辑 1.确认是否登陆过 2.确认密码是否正确
     const { password } = req.body;
-    const isLogin = req.session ? req.session.login : false;
-    if (isLogin) {
-        res.send('您已登陆过，请勿重复登陆');
-        return;
+    if (password === '123' && req.session) {
+        req.session.login = true;
+        res.redirect('/');
     } else {
-        if (password === '123' && req.session) {
-            req.session.login = true;
-            res.redirect('/');
-        } else {
-            res.send('登陆失败！');
-            return;
-        }
+        res.json(getResponseData('login failed', '登陆失败！'))
+        return;
     }
 
 })
 
 
 // 爬取数据
-router.get('/getData', (req: RequesWithBody, res: Response, next: NextFunction) => {
-    const { password, teacherName } = req.body;
-    const isLogin = req.session ? req.session.login : false;
-
-    if (!isLogin) {
-        res.send('请登陆后爬取内容');
-    }
-
+router.get('/crowller', checkLogin, (req: BodyRequest, res: Response, next: NextFunction) => {
     const secret = 'secretKey';
     const url = `http://www.dell-lee.com/typescript/demo.html?secret=${secret}`;
     const analyze = DellAnalyzer.getInstance();
     const crowller = new Crowller(url, analyze);
-    res.send('爬取成功');
+    res.redirect('/');
+})
 
-
+// 展示数据 // 返回已爬取内容
+router.get('/showData', checkLogin, (req: BodyRequest, res: Response, next: NextFunction) => {
+    try {
+        const position = path.resolve(__dirname, '../data/course.json')
+        const result = fs.readFileSync(position, 'utf-8');
+        res.json(
+            getResponseData(JSON.parse(result))
+        )
+    } catch (err) {
+        res.json(getResponseData('show failed', '展示失败！'));
+    };
 })
 
 export {

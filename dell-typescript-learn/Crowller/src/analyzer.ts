@@ -1,7 +1,7 @@
 import fs from 'fs';
 import cheerio from 'cheerio';
 
-import { Analyzer } from './crowller';
+import { Analyzer } from './utils/crowller';
 
 interface Course {
     title: string;
@@ -35,12 +35,14 @@ class DellAnalyzer implements Analyzer {
      generateJSONContent(courseInfo: CourseResult, filePath: string) {
         let fileContent: JSONContent = {}; 
         if (fs.existsSync(filePath)) {
-            fileContent = JSON.parse(fs.readFileSync(filePath, 'utf-8')); 
+            const content = fs.readFileSync(filePath, 'utf-8');
+            if(content !== ''){
+                fileContent = JSON.parse(content); 
+            } 
         }
-
         fileContent[courseInfo.time] = courseInfo.data;
         return fileContent;
-    }
+    }  
 
     // 解析html
     private getCourseInfo(html: string) {
