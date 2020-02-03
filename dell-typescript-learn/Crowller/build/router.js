@@ -14,7 +14,7 @@ exports.router = router;
 var checkLogin = function (req, res, next) {
     var isLogin = req.session ? req.session.login : false;
     if (!isLogin) {
-        res.json(util_1.getResponseData('operation failed', '请先登录'));
+        res.json(util_1.getResponseData('operation failed', '您尚未登陆！'));
         return;
     }
     next();
@@ -64,7 +64,7 @@ router.get('/showData', checkLogin, function (req, res, next) {
         res.json(util_1.getResponseData(JSON.parse(result)));
     }
     catch (err) {
-        res.json(util_1.getResponseData('show failed', '展示失败！'));
+        res.json(util_1.getResponseData('show failed', '数据不存在'));
     }
     ;
 });

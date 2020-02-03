@@ -19,7 +19,7 @@ Tuple1: [string, number, boolean]
 数据接口 函数式接口 接口继承 
 
 8. 类 getter & setter
-9. readonly , interface 高级封装
+9. readonly , interface 高级封装(继承)  
 ---
 1. 静态类型的意义
     类型不可变 + 确定方法

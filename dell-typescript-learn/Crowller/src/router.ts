@@ -11,7 +11,7 @@ const router = Router();
 const checkLogin = (req: Request, res: Response, next: NextFunction) => {
     const isLogin = req.session ? req.session.login : false;
     if (!isLogin) {
-        res.json(getResponseData('operation failed', '请先登录'))
+        res.json(getResponseData('operation failed', '您尚未登陆！'));
         return;
     }
     next();
@@ -93,7 +93,7 @@ router.get('/showData', checkLogin, (req: BodyRequest, res: Response, next: Next
             getResponseData(JSON.parse(result))
         )
     } catch (err) {
-        res.json(getResponseData('show failed', '展示失败！'));
+        res.json(getResponseData('show failed', '数据不存在'));
     };
 })
 
