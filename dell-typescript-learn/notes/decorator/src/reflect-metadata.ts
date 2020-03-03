@@ -7,7 +7,6 @@ const userO = {
     name: 'dell'
 }
 Reflect.defineMetadata('data', 'test', userO);
-
 console.log('userO is ', userO);
 console.log('metadata is ', Reflect.getMetadata('data', userO));
 
@@ -20,13 +19,16 @@ const userc = new UserC();
 console.log('UserC is ', userc);
 console.log('metadata is ', Reflect.getMetadata('data', UserC));
 
-// 挂载到属性上
+/**
+ * 挂载到属性上
+ * 1. 位置：属性所属类的原型的name属性上 (即实例的原型链上)
+ */
 class UserP {
     @Reflect.metadata('data', 'test')
     name = 'dell';
 }
 const userp = new UserP();
-console.log('UserP is ', userp);
+console.log('UserP is ', (userp as any).__proto__);
 console.log('metadata is ', Reflect.getMetadata('data', UserP.prototype, 'name'));
 
 // 挂载到方法上
