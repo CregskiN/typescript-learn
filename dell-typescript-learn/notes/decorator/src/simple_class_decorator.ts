@@ -1,8 +1,10 @@
 /**
  * 类的装饰器
  * 1. 本身是一个function
- * 2. 运行时刻：类创建后，实例化前。 概念上是对类做修饰，而不是对实例做修饰
- * 3. 一类可使多个修饰器，栈式收集修饰器，修饰器后入先执行
+ * 2. 接受constructor即 Class 即 obj.__proto__.constructor
+ * 3. 运行时刻：类创建后，实例化前。 概念上是对类做修饰，而不是对实例做修饰
+ * 4. 一类可使多个修饰器，栈式收集修饰器，修饰器后入先执行
+ * 
  */
 
 function simpleDecoratorOfClass1(flag: boolean) {

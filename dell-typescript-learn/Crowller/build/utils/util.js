@@ -1,6 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var getResponseData = function (data, errMsg) {
+/**
+ * 指定res格式
+ * @param data
+ * @param errMsg
+ */
+exports.getResponseData = function (data, errMsg) {
     if (errMsg) {
         return {
             success: false,
@@ -13,4 +18,3 @@ var getResponseData = function (data, errMsg) {
         data: data
     };
 };
-exports.getResponseData = getResponseData;

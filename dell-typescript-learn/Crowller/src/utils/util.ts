@@ -5,7 +5,12 @@ interface Result {
     data: any;
 }
 
-const getResponseData = (data: any, errMsg?: string): Result => {
+/**
+ * 指定res格式
+ * @param data 
+ * @param errMsg 
+ */
+export const getResponseData = (data: any, errMsg?: string): Result => {
     if (errMsg) {
         return {
             success: false,
@@ -20,6 +25,5 @@ const getResponseData = (data: any, errMsg?: string): Result => {
     }
 }
 
-export {
-    getResponseData
-}
+
+    
