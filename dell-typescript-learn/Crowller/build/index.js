@@ -8,7 +8,7 @@ var body_parser_1 = __importDefault(require("body-parser"));
 var cookie_session_1 = __importDefault(require("cookie-session"));
 require("./controller/LoginController");
 require("./controller/CrowllerController");
-var decorator_1 = require("./controller/decorator");
+var router_1 = __importDefault(require("./router"));
 var catchError_1 = require("./middleware/catchError");
 var app = express_1.default();
 // 问题1：express 库的类型定义文件 .d.ts文件类型描述不准确 // 类型融合
@@ -20,7 +20,7 @@ app.use(cookie_session_1.default({
     keys: ['teacher dell'],
     maxAge: 24 * 60 * 60 * 1000
 }));
-app.use(decorator_1.router);
+app.use(router_1.default);
 app.listen(7001, function () {
     console.log('listen port 7001...');
 });

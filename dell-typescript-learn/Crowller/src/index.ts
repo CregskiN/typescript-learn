@@ -4,7 +4,7 @@ import cookieSession from 'cookie-session';
 
 import './controller/LoginController';
 import './controller/CrowllerController';
-import { router } from './controller/decorator';
+import  router from './router';
 import { catchError } from './middleware/catchError';
 
 const app = express();

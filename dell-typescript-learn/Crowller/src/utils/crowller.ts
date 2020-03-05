@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import superagent from "superagent";
 
-import { DellAnalyzer } from "../analyzer";
+import { DellAnalyzer } from "./analyzer";
 
 
 interface Analyzer {

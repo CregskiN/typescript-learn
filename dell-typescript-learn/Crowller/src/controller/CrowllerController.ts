@@ -3,19 +3,14 @@ import path from 'path';
 import fs from 'fs';
 import { Crowller, DellAnalyzer } from '../utils/crowller';
 import { getResponseData } from '../utils/util';
-import { get, use } from './decorator';
+import { controller, get, use } from '../decorator';
+import { BodyRequest } from '../types';
 
-
-interface BodyRequest extends Request {
-    body: {
-        [key: string]: string | undefined;
-    }
-}
 
 
 // 中间件：登陆验证
-const checkLogin = (req: Request, res: Response, next: NextFunction) => {
-    const isLogin = req.session ? req.session.login : false;
+const checkLogin = (req: Request, res: Response, next: NextFunction): void => {
+    const isLogin = !!(req.session ? req.session.login : false);
     if (!isLogin) {
         res.json(getResponseData('operation failed', '您尚未登陆！'));
         return;
@@ -23,11 +18,12 @@ const checkLogin = (req: Request, res: Response, next: NextFunction) => {
     next();
 }
 
-class CrowllerController {
+@controller('/')
+export class CrowllerController {
 
     @get('/getData')
     @use(checkLogin)
-    getData(req: BodyRequest, res: Response, next: NextFunction) {
+    getData(req: BodyRequest, res: Response, next: NextFunction): void {
         const secret = 'secretKey';
         const url = `http://www.dell-lee.com/typescript/demo.html?secret=${secret}`;
         const analyze = DellAnalyzer.getInstance();
@@ -38,7 +34,7 @@ class CrowllerController {
 
     @get('/showData')
     @use(checkLogin)
-    showData(req: BodyRequest, res: Response, next: NextFunction) {
+    showData(req: BodyRequest, res: Response, next: NextFunction): void {
         try {
             const position = path.resolve(__dirname, '../../data/course.json')
             const result = fs.readFileSync(position, 'utf8');

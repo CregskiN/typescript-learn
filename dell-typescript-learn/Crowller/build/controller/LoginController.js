@@ -9,8 +9,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var decorator_1 = require("./decorator");
 var util_1 = require("../utils/util");
+var decorator_1 = require("../decorator");
 var LoginController = /** @class */ (function () {
     function LoginController() {
     }
@@ -34,7 +34,7 @@ var LoginController = /** @class */ (function () {
     };
     LoginController.prototype.home = function (req, res, next) {
         console.log('/ 路由命中');
-        var isLogin = req.session ? req.session.login : false;
+        var isLogin = !!(req.session ? req.session.login : false);
         if (isLogin) {
             res.send("\n            <html>\n                <body>\n                    <a href=\"/getData\">\u722C\u53D6</a>\n                    <a href=\"/showData\">\u5C55\u793A</a>\n                    <a href=\"/logout\">\u9000\u51FA</a>\n                </body>\n            </html>\n            ");
             return;
@@ -60,7 +60,8 @@ var LoginController = /** @class */ (function () {
         __metadata("design:returntype", void 0)
     ], LoginController.prototype, "home", null);
     LoginController = __decorate([
-        decorator_1.controller
+        decorator_1.controller('/')
     ], LoginController);
     return LoginController;
 }());
+exports.LoginController = LoginController;

@@ -16,10 +16,10 @@ var path_1 = __importDefault(require("path"));
 var fs_1 = __importDefault(require("fs"));
 var crowller_1 = require("../utils/crowller");
 var util_1 = require("../utils/util");
-var decorator_1 = require("./decorator");
+var decorator_1 = require("../decorator");
 // 中间件：登陆验证
 var checkLogin = function (req, res, next) {
-    var isLogin = req.session ? req.session.login : false;
+    var isLogin = !!(req.session ? req.session.login : false);
     if (!isLogin) {
         res.json(util_1.getResponseData('operation failed', '您尚未登陆！'));
         return;
@@ -61,5 +61,9 @@ var CrowllerController = /** @class */ (function () {
         __metadata("design:paramtypes", [Object, Object, Function]),
         __metadata("design:returntype", void 0)
     ], CrowllerController.prototype, "showData", null);
+    CrowllerController = __decorate([
+        decorator_1.controller('/')
+    ], CrowllerController);
     return CrowllerController;
 }());
+exports.CrowllerController = CrowllerController;

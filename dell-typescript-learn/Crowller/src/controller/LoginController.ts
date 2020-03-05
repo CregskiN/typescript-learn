@@ -1,20 +1,16 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 
-import { controller, get, post } from './decorator';
 import { getResponseData } from '../utils/util';
+import { get, post, controller } from '../decorator';
+
+import { BodyRequest } from '../types';
 
 
-interface BodyRequest extends Request {
-    body: {
-        [key: string]: string | undefined;
-    }
-}
-
-@controller
-class LoginController {
+@controller('/')
+export class LoginController {
 
     @get('/logout')
-    logout(req: BodyRequest, res: Response, next: NextFunction) {
+    logout(req: BodyRequest, res: Response, next: NextFunction): void {
         console.log('/logout 路由命中');
 
         if (req.session) {
@@ -25,7 +21,7 @@ class LoginController {
 
 
     @post('/login')
-    login(req: BodyRequest, res: Response, next: NextFunction) {
+    login(req: BodyRequest, res: Response, next: NextFunction): void {
         const { password } = req.body;
         if (password === '123' && req.session) {
             req.session.login = true;
@@ -37,12 +33,11 @@ class LoginController {
     }
 
 
-
     @get('/')
-    home(req: BodyRequest, res: Response, next: NextFunction) {
+    home(req: BodyRequest, res: Response, next: NextFunction): void {
         console.log('/ 路由命中');
 
-        const isLogin = req.session ? req.session.login : false;
+        const isLogin = !!(req.session ? req.session.login : false);
         if (isLogin) {
             res.send(`
             <html>
