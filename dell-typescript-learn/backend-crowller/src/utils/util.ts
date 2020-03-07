@@ -1,8 +1,8 @@
 
-interface Result {
+interface Result<T> {
     success: boolean;
     errMsg?: string;
-    data: any;
+    data: T;
 }
 
 /**
@@ -10,7 +10,7 @@ interface Result {
  * @param data 
  * @param errMsg 
  */
-export const getResponseData = (data: any, errMsg?: string): Result => {
+export const getResponseData = <T>(data: T, errMsg?: string): Result<T> => {
     if (errMsg) {
         return {
             success: false,

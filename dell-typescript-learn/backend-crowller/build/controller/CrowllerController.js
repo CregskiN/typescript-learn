@@ -34,7 +34,7 @@ var CrowllerController = /** @class */ (function () {
         var url = "http://www.dell-lee.com/typescript/demo.html?secret=" + secret;
         var analyze = crowller_1.DellAnalyzer.getInstance();
         new crowller_1.Crowller(url, analyze);
-        res.redirect('/');
+        res.json(util_1.getResponseData(true));
     };
     CrowllerController.prototype.showData = function (req, res, next) {
         try {
@@ -43,26 +43,27 @@ var CrowllerController = /** @class */ (function () {
             res.json(util_1.getResponseData(JSON.parse(result)));
         }
         catch (err) {
-            res.json(util_1.getResponseData('show failed', '数据不存在'));
+            res.json(util_1.getResponseData('show failed', '数据不存在，请先爬取'));
         }
         ;
     };
+    var _a, _b;
     __decorate([
         decorator_1.get('/getData'),
         decorator_1.use(checkLogin),
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [Object, Object, Function]),
+        __metadata("design:paramtypes", [typeof (_a = typeof BodyRequest !== "undefined" && BodyRequest) === "function" ? _a : Object, Object, Function]),
         __metadata("design:returntype", void 0)
     ], CrowllerController.prototype, "getData", null);
     __decorate([
         decorator_1.get('/showData'),
         decorator_1.use(checkLogin),
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [Object, Object, Function]),
+        __metadata("design:paramtypes", [typeof (_b = typeof BodyRequest !== "undefined" && BodyRequest) === "function" ? _b : Object, Object, Function]),
         __metadata("design:returntype", void 0)
     ], CrowllerController.prototype, "showData", null);
     CrowllerController = __decorate([
-        decorator_1.controller('/')
+        decorator_1.controller('/api')
     ], CrowllerController);
     return CrowllerController;
 }());

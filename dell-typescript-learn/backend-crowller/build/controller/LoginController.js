@@ -14,13 +14,6 @@ var decorator_1 = require("../decorator");
 var LoginController = /** @class */ (function () {
     function LoginController() {
     }
-    LoginController.prototype.logout = function (req, res, next) {
-        console.log('/logout 路由命中');
-        if (req.session) {
-            req.session.login = undefined;
-        }
-        res.json(util_1.getResponseData('登出成功！'));
-    };
     LoginController.prototype.isLogin = function (req, res, next) {
         var isLogin = !!(req.session ? req.session.login : false);
         res.json(util_1.getResponseData(isLogin));
@@ -36,12 +29,13 @@ var LoginController = /** @class */ (function () {
             return;
         }
     };
-    __decorate([
-        decorator_1.get('/logout'),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [Object, Object, Function]),
-        __metadata("design:returntype", void 0)
-    ], LoginController.prototype, "logout", null);
+    LoginController.prototype.logout = function (req, res, next) {
+        console.log('/logout 路由命中');
+        if (req.session) {
+            req.session.login = undefined;
+        }
+        res.json(util_1.getResponseData(false));
+    };
     __decorate([
         decorator_1.get('/isLogin'),
         __metadata("design:type", Function),
@@ -54,6 +48,12 @@ var LoginController = /** @class */ (function () {
         __metadata("design:paramtypes", [Object, Object, Function]),
         __metadata("design:returntype", void 0)
     ], LoginController.prototype, "login", null);
+    __decorate([
+        decorator_1.get('/logout'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object, Object, Function]),
+        __metadata("design:returntype", void 0)
+    ], LoginController.prototype, "logout", null);
     LoginController = __decorate([
         decorator_1.controller('/api')
     ], LoginController);

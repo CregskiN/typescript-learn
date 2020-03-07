@@ -14,3 +14,12 @@ export enum Methods {
 }
 
 export type ClassPrototype = CrowllerController | LoginController;
+
+export interface CourseInfo {
+    title: string;
+    count: number;
+}
+
+export interface Data {
+    [key: string]: CourseInfo[];
+}
