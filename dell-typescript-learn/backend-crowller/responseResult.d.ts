@@ -1,5 +1,17 @@
 declare namespace responseResult {
-    export type isLogin = boolean;
-    export type login = boolean;
-    
+
+    interface CourseInfo {
+        title: string;
+        count: number;
+    }
+
+    export interface Data {
+        [key: string]: CourseInfo[];
+    }
+
+    type isLogin = boolean;
+    type login = boolean;
+    type logout = boolean;
+    type getData = boolean;
+    type showData = Data | boolean;
 }
